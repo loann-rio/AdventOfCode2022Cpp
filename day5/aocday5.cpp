@@ -34,12 +34,22 @@ void processStack(string file, vector<vector<char>> & stack) {
 }
 
 void printstack(vector<vector<char>> & stacks) {
+    cout << '\n';
     for (vector<char> stack : stacks) {
         for (char box : stack) {
             cout << " " << box;
         }
         cout << '\n';
     }
+}
+
+void movestack(vector<vector<char>> & stacks, int indexFirstStack, int index2stack, int nbElement) {
+    vector<char> & stack1 = stacks[indexFirstStack];
+    vector<char> & stack2 = stacks[index2stack];
+    for (int i=0; i<nbElement; i++) {
+        stack2.push_back(stack1.back());
+        stack1.pop_back();
+    }   
 }
 
 int main() {
@@ -49,5 +59,12 @@ int main() {
     vector<vector<char>> stack_input(9);
     processStack("inputsStack.txt", stack_input);
 
+    printstack(stack_input);
+    for (string mov : Movements) {
+        int nbElement = stoi(mov.substr(5, mov.find('f')));
+        int indexFstack = stoi(mov.substr(mov.find('f')+5, mov.find('f')+7)) - 1;
+        int indexSstack = stoi(mov.substr(mov.find('f')+10, mov.find('f')+13)) - 1;
+        movestack(stack_input, indexFstack, indexSstack, nbElement);
+    }
     printstack(stack_input);
 }
