@@ -52,6 +52,18 @@ void movestack(vector<vector<char>> & stacks, int indexFirstStack, int index2sta
     }   
 }
 
+void movestackpart2(vector<vector<char>> & stacks, int indexFirstStack, int index2stack, int nbElement) {
+    vector<char> & stack1 = stacks[indexFirstStack];
+    vector<char> & stack2 = stacks[index2stack];
+    stack2.resize(stack2.size()+nbElement);
+    for (int i=0; i<nbElement; i++) {
+        stack2[stack2.size() - nbElement + i] = stack1[stack1.size() - nbElement + i];
+    } 
+    stack1.resize(stack1.size() - nbElement);
+}
+
+
+
 int main() {
     vector<string> Movements;
     get_inputs(Movements, "inputsMovement.txt");
@@ -64,7 +76,8 @@ int main() {
         int nbElement = stoi(mov.substr(5, mov.find('f')));
         int indexFstack = stoi(mov.substr(mov.find('f')+5, mov.find('f')+7)) - 1;
         int indexSstack = stoi(mov.substr(mov.find('f')+10, mov.find('f')+13)) - 1;
-        movestack(stack_input, indexFstack, indexSstack, nbElement);
+
+        movestackpart2(stack_input, indexFstack, indexSstack, nbElement);
     }
     printstack(stack_input);
 }
