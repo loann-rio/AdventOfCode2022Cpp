@@ -1,8 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <algorithm>
 #include <vector>
-#include <bits/stdc++.h>
 
 
 using namespace std;
@@ -15,13 +13,22 @@ int searchDirectory(vector<int> & sizes);
 int main() {
     vector<int> sizes; // sizes of directory and subdirectories
     int total_weight = searchDirectory(sizes);
+
     int r = 0;
+    int rpart2 = 10000000;
+
+    int neededSpace = 30000000 - 70000000 + total_weight;
+
     for (int e : sizes) {
         if (e<=100000) {
             r+= e;
         }
+        if ((e>neededSpace)&&(e<rpart2)) {
+            rpart2 = e;
+        }
     }
-    cout << r;
+    cout << r << '\n';
+    cout << rpart2 << '\n';
 }
 
 int searchDirectory(vector<int> & sizes) {
