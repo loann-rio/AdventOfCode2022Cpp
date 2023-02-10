@@ -21,16 +21,11 @@ template <typename T> int sgn(T val) {
     return (T(0) < val) - (val < T(0));
 }
 
-void appendToVect(vector<tuple<int, int>> & visited, tuple<int, int> pos) {
-    // append the position to the vector if not already in
-    for (tuple<int, int> pastpos : visited) {
-        if (pastpos == pos) {
-            return;
-        }
+void appendToVect(vector<tuple<int, int>> & visible, tuple<int, int> pos) {
+    if (find(visible.begin(), visible.end(), pos) == visible.end()) {
+        visible.push_back(pos);
     }
-    visited.push_back(pos);
 }
-
 
 int getDir(char dir) {
     switch (dir)
@@ -54,8 +49,6 @@ int main() {
     // directions
     int xdir[4] = {0, 1, 0, -1};
     int ydir[4] = {1, 0, -1, 0};
-
-    tuple<int, int> 
 
     // head direction
     int dir = 0;
@@ -89,8 +82,7 @@ int main() {
                 posYtail += sgn(posYHead-posYtail);
             }
 
-            tuple<int, int> pos = {posXtail, posYtail};
-            appendToVect(visited, pos);
+            appendToVect(visited, {posXtail, posYtail});
 
         }
         
